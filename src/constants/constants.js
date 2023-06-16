@@ -1,5 +1,5 @@
 const constants = {
-    'mobileWidth': '768px',
+    'mobileWidth': '932px',
 };
 
 export default constants;
