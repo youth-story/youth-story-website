@@ -1,0 +1,12 @@
+.form-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.error {
+  color: red;
+  font-size: 2.2vh;
+  margin-bottom: 3vh;
+}

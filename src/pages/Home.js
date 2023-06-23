@@ -1,16 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import NavBar from '../components/Navbar/NavBar';
-import {aboutInfo} from '../constants/pageInformation';
+import {homeInfo} from '../constants/pageInformation';
+import HeaderBackDrop from '../components/HeaderBackDrop';
+import MagazineCover from '../components/Magazine/MagazineCover';
 
 export default function Home() {
 
-    return(
+    return (
         <>
-            <h1>Coming Soon...</h1>
-            <ul>
-                <Link to='/about'>About</Link>
-            </ul>
+            {/* <NavBar /> */}
+            <h1>Hello</h1>
         </>
     );
 
