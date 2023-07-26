@@ -2,12 +2,16 @@ import React, {useState, useEffect} from 'react';
 import Form from './Form';
 import './SignupForm.css';
 import { isEmail } from 'validator';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import api, { setAuthToken } from '../../services/api';
+import axios from 'axios';
+import {baseUrl} from '../../utils/index';
 
 export default function SignupForm({ data, setData, errorMessage, setErrorMessage, updateErrorMessage}) {
 
     const [detailsSubmitted, setDetailsSubmitted] = useState(false);
     const navigate = useNavigate();
+    const [message, setMessage] = useState('');
     
     const isValid = (name, value) => {
         if (name === 'name')
@@ -54,6 +58,7 @@ export default function SignupForm({ data, setData, errorMessage, setErrorMessag
             updateErrorMessage('password', '*This is a required field');
             return false;
         }
+        
 
         return true;
 
@@ -85,7 +90,11 @@ export default function SignupForm({ data, setData, errorMessage, setErrorMessag
             updateErrorMessage('username', '*Spaces are not allowed');
             return;
           }
-          // BE: check if username is already taken
+          else if (value.replace(/\s/g, '').length > 30)
+          {
+            updateErrorMessage('username', '*Max length is 30');
+            return;
+          }
         } else if (name === 'email') {
           if (value.replace(/\s/g, '').length > 0) {
             if (!isValid('email', value)) {
@@ -93,7 +102,13 @@ export default function SignupForm({ data, setData, errorMessage, setErrorMessag
             } else {
               updateErrorMessage('email', ''); 
             }
-          } else {
+          } 
+          else if (value.replace(/\s/g, '').length > 100)
+          {
+            updateErrorMessage('email', '*Max length is 100');
+            return;
+          }
+          else {
             updateErrorMessage('email', ''); 
           }
         } else if (name === 'password') {
@@ -120,18 +135,53 @@ export default function SignupForm({ data, setData, errorMessage, setErrorMessag
         const {name, value} = e.target;
            setData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: value.replace(/[^0-9]/g, ''),
           }));
     }
-    const submitSignupForm = () => {
-        alert('Submitted');
+
+    const submitSignupForm = async (e) => {
+      e.preventDefault();
+     
+      setData({
+        email: '',
+        name: '',
+        password: '',
+        username: '',
+      });
+        setDetailsSubmitted(false);
+
+      try {
+
+        const response = await axios.post(`${baseUrl}/api/auth/sign-up`, {
+          email: data.email,
+          name: data.name,
+          password: data.password,
+          username: data.username,
+        });
+        console.log(response.data);
+    
+        const { token } = response.data;
+    
+        // Set the JWT token in the request headers
+        setAuthToken(token);
+    
+        // Store the JWT token in local storage or cookies
+        sessionStorage.setItem('token', token);
+    
+        // Redirect the user to the protected route or dashboard
+        navigate('/login');
+      } catch (err) {
+        // Handle login error
+        setMessage('An error occured, please try again later');
+      }
     }
 
     return(
         <div className='container'>
             {!detailsSubmitted ? <h1 className='heading'>Sign Up</h1> : <h1 className='heading'>Enter OTP</h1>}
-            <Form type='sign-up' data={data} setData={setData} errorMessage={errorMessage} setErrorMessage={setErrorMessage} updateErrorMessage={updateErrorMessage} changeValue={changeValue} detailsSubmitted={detailsSubmitted} setDetailsSubmitted={setDetailsSubmitted} changeOTP={changeOTP} submitSignupForm={submitSignupForm} dataValidated={dataValidated} />
-           <p className='switch-page'>Already have an account? <a href='/login' onClick={handleLinkClick} style={{textDecoration: 'none', color: 'white'}}>Login</a></p>
+            <p style={{justifyContent: 'center', color: 'red', fontWeight: 'bold'}}>{message}</p>
+            <Form type='sign-up' data={data} setData={setData} errorMessage={errorMessage} setMessage={setMessage} setErrorMessage={setErrorMessage} updateErrorMessage={updateErrorMessage} changeValue={changeValue} detailsSubmitted={detailsSubmitted} setDetailsSubmitted={setDetailsSubmitted} changeOTP={changeOTP} submitSignupForm={submitSignupForm} dataValidated={dataValidated} />
+           {!detailsSubmitted ? <p className='switch-page'>Already have an account? <Link to='/login' onClick={(event)=>{sessionStorage.clear();handleLinkClick(event);}} style={{textDecoration: 'none', color: 'white'}}>Login</Link></p> : null}
         </div>
     );
 

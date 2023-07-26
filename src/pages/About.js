@@ -1,14 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import NavBar from '../components/Navbar/NavBar';
-import {aboutInfo} from '../constants/pageInformation';
+import Backdrop from '../components/About/Backdrop/Backdrop';
+import DrawerAppBar from '../components/AppBar/DrawerAppBar';
 
 export default function About() {
 
     return(
         <>
-            <NavBar title={aboutInfo.title} info={aboutInfo.info} />
-            <h1>Coming Soon...</h1>
+            <DrawerAppBar />
+            <Backdrop />
         </>
     );
 

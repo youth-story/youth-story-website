@@ -1,0 +1,107 @@
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+  }
+  
+@keyframes moveUpDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); } /* Adjust the value for desired movement */
+}
+
+.mouse-image {
+  animation: moveUpDown 2s linear infinite; /* Change '2s' to control the speed */
+  width: 70px;
+  height: 70px;
+}
+
+.header-container {
+  display: flex;
+  padding: 0 1% 0 1%;
+  height: 100vh;
+  margin-bottom: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-title {
+  width: 80vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  /* Change layout for mobile devices */
+  .header-container {
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 20px;
+  }
+  .logo-title {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  .logo {
+    width: 55% !important; /* Adjust the width as needed */
+    height: 55% !important; /* Let the height adjust automatically to maintain the aspect ratio */
+    margin-bottom: 0;
+  }
+  .header-description {
+    margin: 0 0;
+    text-align: left;
+  }
+  .header-title {
+    font-size: 1rem;
+    text-align: center; /* Center the words vertically */
+    font-size: 3rem;
+    text-align: center;
+    word-break: break-word;
+  }
+}
+
+.header-title {
+  font-weight: 600;
+  font-family: "Josefin Sans", "Segoe UI", sans-serif;
+  letter-spacing: 1px;
+  font-size: 5rem;
+}
+
+.header-d2d {
+  color: #660000;
+  font-weight: 500;
+}
+
+.header-description {
+  font-size: 1.4rem;
+  text-align: center;
+  margin: 1rem 0;
+  font-weight: 500;
+  font-family: "Josefin Sans", "Segoe UI", sans-serif;
+}
+
+.fade-out {
+  animation: fadeOutAnimation 1s linear;
+}
+
+@keyframes fadeOutAnimation {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.header-motivate {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.logo {
+  width: 15%;
+  height: 70%;
+}
+  

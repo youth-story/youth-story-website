@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import LoginForm from '../components/LoginSignup/LoginForm';
 import SignupForm from '../components/LoginSignup/SignupForm';
 import './css/LoginSignup.css';
+import { useNavigate } from 'react-router';
 
 export default function LoginSignup({type}) {
 
@@ -10,7 +11,8 @@ export default function LoginSignup({type}) {
         email: '',
         password: '',
         name: '',
-        otp: '',
+        otp: null,
+        rememberMe: false,
     });
     const [errorMessage, setErrorMessage] = useState({
         username: '',
