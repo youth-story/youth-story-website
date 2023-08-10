@@ -10,9 +10,10 @@ import Magazine from './pages/Magazine';
 import Interviews from './pages/Interviews';
 import Resources from './pages/Resources';
 import Search from './pages/Search';
-import LoginSignup from './pages/LoginSignup';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 import NotFound from './pages/NotFound';
-import LogoutButton from './components/LoginSignup/LogoutButton';
+// import LogoutButton from './components/Signup/LogoutButton';
 import Article from './components/SuccessStories/Article';
 
 const MyRoutes = () => {
@@ -20,20 +21,20 @@ const MyRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      {/* <Route path="/" element={<Home />} /> */}
       {/* <Route path="/social" element={<Social />} />
       <Route path="/news" element={<News />} /> */}
-      <Route path="/success-stories" element={<SuccessStories />} />
-      <Route path="/article/:id" element={<Article />} />
+      {/* <Route path="/success-stories" element={<SuccessStories />} />
+      <Route path="/article/:id" element={<Article />} /> */}
       {/* <Route path="/d2d" element={<Magazine />} />
       <Route path="/interviews" element={<Interviews />} />
       <Route path="/resources" element={<Resources />} />
       <Route path="/about" element={<About />} />
       <Route path="/sponsors" element={<Sponsors />} />
       <Route path="/search" element={<Search />} /> */}
-      <Route path="/login" element={<LoginSignup type="login" />} />
-      <Route path="/sign-up" element={<LoginSignup type="sign-up" />} />
-      <Route path="/logout" element={<LogoutButton />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/sign-up" element={<Signup />} />
+      {/* <Route path="/logout" element={<LogoutButton />} /> */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

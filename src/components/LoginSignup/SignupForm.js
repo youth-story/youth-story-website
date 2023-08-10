@@ -1,10 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import Form from './Form';
 import './SignupForm.css';
 import { isEmail } from 'validator';
 import { useNavigate, Link } from 'react-router-dom';
 import api, { setAuthToken } from '../../services/api';
 import axios from 'axios';
+import Card from './Card';
+import Header from './Header';
+import Form from './Form';
+import Laptop from './Laptop';
+import Social from './Social';
 import {baseUrl} from '../../utils/index';
 
 export default function SignupForm({ data, setData, errorMessage, setErrorMessage, updateErrorMessage}) {
@@ -178,10 +182,19 @@ export default function SignupForm({ data, setData, errorMessage, setErrorMessag
 
     return(
         <div className='container'>
-            {!detailsSubmitted ? <h1 className='heading'>Sign Up</h1> : <h1 className='heading'>Enter OTP</h1>}
-            <p style={{justifyContent: 'center', color: 'red', fontWeight: 'bold'}}>{message}</p>
-            <Form type='sign-up' data={data} setData={setData} errorMessage={errorMessage} setMessage={setMessage} setErrorMessage={setErrorMessage} updateErrorMessage={updateErrorMessage} changeValue={changeValue} detailsSubmitted={detailsSubmitted} setDetailsSubmitted={setDetailsSubmitted} changeOTP={changeOTP} submitSignupForm={submitSignupForm} dataValidated={dataValidated} />
-           {!detailsSubmitted ? <p className='switch-page'>Already have an account? <Link to='/login' onClick={(event)=>{sessionStorage.clear();handleLinkClick(event);}} style={{textDecoration: 'none', color: 'white'}}>Login</Link></p> : null}
+          <Card>
+             <Header />
+             <Form />
+             <div className="or-sign-up-with">
+              <div className="line"></div>
+              <div className="or-text">or sign up with</div>
+              <div className="line"></div>
+            </div>
+             <Social />
+             <div className="account-container">
+              <div className="account">Already have an account? <Link style={{color: 'red', textDecoration: 'none', fontWeight: '700'}} to='/login'>Log in</Link></div>
+            </div>
+          </Card>
         </div>
     );
 

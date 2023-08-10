@@ -1,0 +1,30 @@
+.google-button-container {
+    /* display: inline-block;
+    position: relative; */
+  }
+  
+  .google-button-container span {
+    color: black;
+  }
+  
+  .google-button-icon {
+    /* display: block; */
+    width: 2vw; 
+    height: 2vh;
+    /* margin: auto;  */
+   
+  }
+  
+  .linkedin-button {
+    color: black;
+    width: 40%;
+    height: 40%;
+  }
+
+  .social-container {
+    display: flex;
+    padding: 0.1rem 0 0.1rem 0;  
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+  }

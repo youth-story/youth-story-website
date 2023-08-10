@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import LoginForm from '../components/LoginSignup/LoginForm';
-import SignupForm from '../components/LoginSignup/SignupForm';
-import './css/LoginSignup.css';
+import LoginForm from '../components/Signup/LoginForm';
+import SignupForm from '../components/Signup/SignupForm';
+import './css/Signup.css';
 import { useNavigate } from 'react-router';
 
-export default function LoginSignup({type}) {
+export default function Signup({type}) {
 
     const [data, setData] = useState({
         username: '',

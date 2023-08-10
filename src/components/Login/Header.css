@@ -1,0 +1,28 @@
+.Header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.logo {
+    height: auto;
+    max-width: 20%;
+    margin: 0;
+}
+
+.text div {
+    margin: 1.5% 0 0 0;
+    font-size: 1.5rem;
+}
+
+.highlight {
+    color: #B81A1A;
+}
+  
+@media (max-width: 768px) {
+    .text div {
+        font-size: 1rem;
+    }
+}
