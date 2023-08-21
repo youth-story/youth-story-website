@@ -11,11 +11,11 @@ export default function ArticleCardCover() {
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         {articles.map((article, index) => (
           index !== 0 ? (
-            <Link to={`/article/${article.id}`} key={index} style={{ textDecoration: 'none' }}>
+            <Link to={`/success-stories/${article.id}`} key={index} style={{ textDecoration: 'none' }}>
               <ArticleCard article={article} key={index} />
             </Link>
           ) : (
-            <Link to={`/article/${article.id}`} key={index} style={{ textDecoration: 'none', }}>
+            <Link to={`/success-stories/${article.id}`} key={index} style={{ textDecoration: 'none', }}>
               <MajorArticle article={article} key={index} />
             </Link>
           )

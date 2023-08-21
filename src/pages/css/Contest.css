@@ -1,0 +1,28 @@
+.contest-container {
+    height: fit-content;
+    padding: 2rem;
+    width: 100vw;
+    border-radius: 10px;
+    margin: 2rem;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    border: 2px solid #ccc;
+}
+
+.content {
+    display: flex;
+    align-self: flex-start;
+    flex-direction: column;
+    width: 70%;
+}
+
+@media (max-width: 768px) {
+    .content {
+        width: 100%;
+    }
+    .container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+}

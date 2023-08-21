@@ -13,6 +13,7 @@ export default function Login({type}) {
         password: '',
         name: '',
         otp: null,
+        mode: 0,
     });
     const [errorMessage, setErrorMessage] = useState({
         username: '',
@@ -41,7 +42,7 @@ export default function Login({type}) {
     });
 
     return(
-        <div className='container-Login'>
+        <div className='container-login'>
             <LoginForm data={data} setData={setData} errorMessage={errorMessage} setErrorMessage={setErrorMessage} updateErrorMessage={updateErrorMessage} />   
         </div>
     );

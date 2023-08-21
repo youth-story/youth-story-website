@@ -1,8 +1,8 @@
-.container-signup {
+.container-login {
     display: flex;
+    border: 1px solid black;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background: linear-gradient(108.4deg, rgb(253, 44, 56) 3.3%, rgb(176, 2, 12) 98.4%);
-    /* background: #8F8F8F; */
   }

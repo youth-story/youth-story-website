@@ -15,9 +15,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {Link} from 'react-router-dom';
+import D2DLogo from './D2DLogo.png';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
+const navItems = ['About', 'Success-stories', 'Contests', 'Sign-up'];
 
 function DrawerAppBar(props) {
   const { window } = props;
@@ -36,6 +37,7 @@ function DrawerAppBar(props) {
     <Box sx={{ textAlign: 'center' }}>
       <List>
         {navItems.map((item) => (
+          <Link style={{textDecoration: 'none', color: '#850202'}} to={`/${item.charAt(0).toLowerCase() + item.slice(1)}`}>
           <ListItem
             key={item}
             disablePadding
@@ -65,6 +67,7 @@ function DrawerAppBar(props) {
               </ListItemText>
             </ListItemButton>
           </ListItem>
+          </Link>
         ))}
       </List>
     </Box>
@@ -83,22 +86,23 @@ function DrawerAppBar(props) {
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
-            style={{ color: 'tomato' }}
+            style={{ color: '#850202' }}
           >
             <MenuIcon />
          </IconButton>
-              <Typography variant="h6" component="div" sx={{ paddingRight: '16px', color: '#000' }}>
-              <span style={{color: '#FF2400', fontWeight: 'bold'}}>D<span style={{fontSize: 'medium'}}>2</span>D</span><span style={{fontWeight: 'bold'}}>:</span><span style={{fontWeight: 'bolder'}}>YOUTH STORY</span>
+              <Typography variant="h6" component="div" sx={{ paddingRight: '16px', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                <img style={{width: '40px', height: '40px'}} src={D2DLogo} alt='D2D Logo'/>
+              <span style={{fontWeight: 'bolder'}}>YOUTH STORY</span>
             </Typography>
           </Box>
           <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center' }}>
   {navItems.map((item, index) => (
     <React.Fragment key={item}>
       <Link
-        to={item}
+        to={`/${item.charAt(0).toLowerCase() + item.slice(1)}`}
         style={{
           fontWeight: 'revert-layer',
-          color: 'black',
+          color: '#850202',
           position: 'relative',
           textDecoration: 'none',
           paddingBottom: selectedNavItem && item === selectedNavItem ? '4px' : undefined,

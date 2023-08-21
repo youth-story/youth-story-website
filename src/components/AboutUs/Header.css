@@ -1,0 +1,31 @@
+.about-header-container {
+    display: flex;
+    height: 80vh;
+    justify-content: flex-start;
+    padding-top: 10%;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(45deg, #e03131, #d72626, #850202, #a41717);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  @media (max-width: 768px) {
+    .about-header-container {
+        justify-content: center;
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 1024px) { 
+    .about-header-container {
+      justify-content: center;
+      padding-top: 0;
+    }
+  }

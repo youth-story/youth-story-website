@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import articles from '../../dummy/articles';
 import { useParams } from 'react-router-dom';
+import DrawerAppBar from '../AppBar/DrawerAppBar';
 
 export default function Article(props) {
   const { id } = useParams();
@@ -15,6 +16,7 @@ export default function Article(props) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <DrawerAppBar />
       <img src={article.thumbnail} alt="Article Thumbnail" style={{ width: '100%', maxWidth: '400px' }} />
       <h1 style={{ textAlign: 'center' }}>{article.title}</h1>
       <p style={{ fontSize: '1rem', alignSelf: 'flex-end' }}>By <span style={{fontWeight: '700', }}>{article.author}</span></p>

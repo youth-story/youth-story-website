@@ -10,32 +10,22 @@ export default function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
-    if (!token) {
-      if (location.pathname != '/login' && location.pathname != '/sign-up')
-        navigate('/sign-up');
-      else if (location.pathname == '/login')
-        navigate('/login')
-      else 
-        navigate('/sign-up')
-    } else {
+    console.log(token);
+  
+    if (token) {
       const decodedToken = jwt_decode(token);
       const currentTime = Date.now() / 1000; // Get current time in seconds
+      console.log(decodedToken);
 
-      if (decodedToken.exp < currentTime) {
-
-        if (location.pathname != '/login' && location.pathname != '/sign-up')
-          navigate('/login');
-        else if (location.pathname == '/sign-up')
-          navigate('/sign-up');
-        else
-          navigate('/login');
-       
-      } else if (location.pathname === '/login' || location.pathname === '/sign-up') {
-        navigate('/success-stories');
+      if (decodedToken.exp >= currentTime) {
+        // If token is valid, prevent navigation to login and sign-up routes
+        if (location.pathname === '/login' || location.pathname === '/sign-up') {
+          navigate('/');
+        }
       }
     }
   }, [navigate, location.pathname]);
+  
 
   return <MyRoutes tokenExpired={tokenExpired} />;
 }

@@ -13,7 +13,9 @@ export default function Signup({type}) {
         password: '',
         name: '',
         otp: null,
+        mode: 0,
     });
+
     const [errorMessage, setErrorMessage] = useState({
         username: '',
         email: '',

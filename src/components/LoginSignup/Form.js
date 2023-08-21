@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import InputForm from '../InputForm';
 import axios from 'axios';
 import './Form.css';
+import InputLabel from '@mui/material/InputLabel';
 import { TextField, InputAdornment, IconButton } from '@mui/material';
 import {baseUrl} from '../../utils/index';
 import PasswordField from './PasswordField';
@@ -26,7 +27,7 @@ const RedIconButton = styled(IconButton)`
   }
 `;
 
-const Form = () => {
+const Form = ({message, data, changeValue, errorMessage, submitSignupForm}) => {
 
   const inputStyles = {
     color: '#B81A1A',
@@ -40,16 +41,26 @@ const Form = () => {
 
   return(
     <form className='form'>
+      <p style={{color: 'red'}}>{message}</p>
       <RoundedTextField
       label="Name"
+      id="name"
+      value={data.name}
       variant="outlined"
       InputProps={{ style: inputStyles }}
       fullWidth
       margin="normal"
+      onChange={(e)=>changeValue("name", e.target.value)}
     />
-      <RoundedTextField label="Username" variant="outlined" InputProps={{ style: inputStyles }} fullWidth margin="normal" />
-      <RoundedTextField label="Email" variant="outlined" InputProps={{ style: inputStyles }} fullWidth margin="normal" />
+    <InputLabel style={{color: 'red'}} htmlFor="name">{errorMessage.name}</InputLabel>
+      <RoundedTextField value={data.username} id="username" onChange={(e)=>changeValue("username", e.target.value)} label="Username" variant="outlined" InputProps={{ style: inputStyles }} fullWidth margin="normal" />
+      <InputLabel style={{color: 'red'}} htmlFor="username">{errorMessage.username}</InputLabel>
+      <RoundedTextField value={data.email} id="email" onChange={(e)=>changeValue("email", e.target.value)} label="Email" variant="outlined" InputProps={{ style: inputStyles }} fullWidth margin="normal" />
+      <InputLabel style={{color: 'red'}} htmlFor="email">{errorMessage.email}</InputLabel>
       <RoundedTextField
+      value={data.password}
+      id="password"
+      onChange={(e)=>changeValue("password", e.target.value)}
       label="Password"
       variant="outlined"
       type={showPassword ? 'text' : 'password'}
@@ -70,7 +81,8 @@ const Form = () => {
         style: inputStyles
       }}
     />
-      <button type="submit" className="submit-button">
+    <InputLabel style={{color: 'red'}} htmlFor="password">{errorMessage.password}</InputLabel>
+      <button onClick={submitSignupForm} type="submit" className="submit-button">
         Sign Up!
       </button>
     </form>

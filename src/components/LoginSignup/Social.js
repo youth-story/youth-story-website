@@ -2,15 +2,44 @@ import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { clientId, clientIdLinkedin, baseUrl } from '../../utils/index';
 import './Social.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
+import api, { setAuthToken } from '../../services/api';
 
-const Social = () => {
+const Social = ({setData, setMessage}) => {
 
-  const successSignUp = (res) => {
-    console.log('Google login success', res.profileObj);
+  const navigate = useNavigate();
+
+  const successSignUp = async (res) => {
+     
+    setData({
+      email: '',
+      name: '',
+      password: '',
+      username: '',
+      mode: 0,
+    });
+
+    try {
+
+      const response = await axios.post(`${baseUrl}/api/auth/sign-up`, {
+        email: res.profileObj.email,
+        name: res.profileObj.name,
+        password: -1,
+        username: "-1",
+        mode: 1,
+      });
+  
+      // Redirect the user to the protected route or dashboard
+      navigate('/login');
+    } catch (err) {
+      // Handle login error
+      setMessage('An error occured, please try again later');
+    }
   };
 
   const failureSignUp = () => {
-    console.log('Google login failure');
+    setMessage('Google login failure');
   };
 
   return (

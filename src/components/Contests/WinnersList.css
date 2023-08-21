@@ -1,0 +1,28 @@
+.winners-list {
+    padding: 1vw;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-self: center;
+    flex-direction: column;
+    width: 15rem;
+    height: fit-content;
+}
+
+.under-line {
+    width: 90%;
+    height: 2px;
+    background-color: red;
+}
+
+.winners {
+    margin-top: 20%;
+}
+
+@media (max-width: 768px) {
+    .winners-list {
+        margin-top: 2vh;
+    }
+}

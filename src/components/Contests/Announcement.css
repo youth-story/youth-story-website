@@ -1,0 +1,44 @@
+.announcement-container {
+  height: fit-content;
+  margin: 2rem 0 0 1rem;
+  flex-direction: column;
+  width: 100%;
+}
+
+.announcement-description {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.under-line-container {
+  display: flex;
+  align-items: center;  /* Vertically align the underline with the text */
+}
+
+.announcement-header {
+  width: fit-content;
+}
+
+.under-line {
+  flex-grow: 1;  /* Allow the underline to take the remaining space */
+  height: 2px;
+  background-color: red;
+}
+
+@media (max-width: 768px) {
+  .announcement-container {
+    width: 100vw;
+    margin: 2rem 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .announcement-description {
+    width: 100%;
+  }
+  .announcement-description p {
+    font-size: 1rem;
+  }
+  .under-line-container {
+    width: 100%;
+  }
+}

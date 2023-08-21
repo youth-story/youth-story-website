@@ -1,15 +1,24 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import Backdrop from '../components/About/Backdrop/Backdrop';
+import './css/About.css';
 import DrawerAppBar from '../components/AppBar/DrawerAppBar';
+import UserProgressBar from '../components/AboutUs/UserProgressBar';
+import Header from '../components/AboutUs/Header';
+import Timeline from '../components/AboutUs/Timeline';
+import Video from '../components/AboutUs/Video';
+import Team from '../components/AboutUs/Team';
 
 export default function About() {
 
     return(
-        <>
+        <div className='about-container'>
             <DrawerAppBar />
-            <Backdrop />
-        </>
+            <Header />
+            <UserProgressBar />
+            <br />
+            <Video />
+            <Timeline />
+            <Team />
+        </div>
     );
 
 }

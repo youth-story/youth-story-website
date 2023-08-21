@@ -7,7 +7,6 @@ import axios from 'axios';
 import Card from './Card';
 import Header from './Header';
 import Form from './Form';
-import Laptop from './Laptop';
 import Social from './Social';
 import {baseUrl} from '../../utils/index';
 
@@ -68,72 +67,73 @@ export default function SignupForm({ data, setData, errorMessage, setErrorMessag
 
     }
 
-    const changeValue = (e) => {
-        const { name, value } = e.target;
-      
-        if ((name === 'name' && value.replace(/\s/g, '').length > 50) || (name === 'username' && value.replace(/\s/g, '').length > 30)) {
-          let len = 30;
-          if (name === 'name') len = 50;
-          updateErrorMessage(name, `*Max limit ${len} characters`);
+    const changeValue = (name, value) => {
+      if ((name === 'name' && value.replace(/\s/g, '').length > 50) || (name === 'username' && value.replace(/\s/g, '').length > 30)) {
+        let len = 30;
+        if (name === 'name') len = 50;
+        updateErrorMessage(name, `*Max limit ${len} characters`);
+        return;
+      }
+    
+      if (name === 'name') {
+        if (value.replace(/\s/g, '').length > 50) {
+          updateErrorMessage('name', '*Max limit 50 characters');
+          return;
+        } else if (value.replace(/\s/g, '').length > 1 && !isValid('name', value)) {
+          updateErrorMessage('name', '*Only A-Z and a-z characters allowed');
+          return;
+        } else if (value.split(" ").length > 2) {
+          updateErrorMessage('name', '*Only First and Last name allowed');
           return;
         }
-      
-        if (name === 'name') {
-          if (value.replace(/\s/g, '').length > 50) {
-            updateErrorMessage('name', '*Max limit 50 characters');
-            return;
-          } else if (value.replace(/\s/g, '').length > 1 && !isValid('name', value)) {
-            updateErrorMessage('name', '*Only A-Z and a-z characters allowed');
-            return;
-          } else if (value.split(" ").length > 2) {
-            updateErrorMessage('name', '*Only First and Last name allowed');
-            return;
-          }
-        } else if (name === 'username') {
-          if (value.replace(/\s/g, '').length > 0 && value.includes(' ')) {
-            updateErrorMessage('username', '*Spaces are not allowed');
-            return;
-          }
-          else if (value.replace(/\s/g, '').length > 30)
-          {
-            updateErrorMessage('username', '*Max length is 30');
-            return;
-          }
-        } else if (name === 'email') {
-          if (value.replace(/\s/g, '').length > 0) {
-            if (!isValid('email', value)) {
-              updateErrorMessage('email', '*Enter a valid email');
-            } else {
-              updateErrorMessage('email', ''); 
-            }
-          } 
-          else if (value.replace(/\s/g, '').length > 100)
-          {
-            updateErrorMessage('email', '*Max length is 100');
-            return;
-          }
-          else {
+      } else if (name === 'username') {
+        if (value.replace(/\s/g, '').length > 0 && value.includes(' ')) {
+          updateErrorMessage('username', '*Spaces are not allowed');
+          return;
+        } else if (value.replace(/\s/g, '').length > 30) {
+          updateErrorMessage('username', '*Max length is 30');
+          return;
+        }
+      } else if (name === 'email') {
+        if (value.replace(/\s/g, '').length > 0) {
+          if (!isValid('email', value)) {
+            updateErrorMessage('email', '*Enter a valid email');
+          } else {
             updateErrorMessage('email', ''); 
           }
-        } else if (name === 'password') {
-          const trimmedValue = value.replace(/\s/g, '');
-          if (trimmedValue.length > 0 && trimmedValue.length < 8) {
-            updateErrorMessage('password', '*Must include at least 8 characters');
-          }
+        } else if (value.replace(/\s/g, '').length > 100) {
+          updateErrorMessage('email', '*Max length is 100');
+          return;
+        } else {
+          updateErrorMessage('email', ''); 
         }
-      
-        let inputValue = value;
-        if (name === 'name')
-          inputValue = value.toLowerCase().replace(/\b\w/g, (match) => match.toUpperCase());
-        setData((prevData) => ({
-          ...prevData,
-          [name]: inputValue,
-        }));
-      
-        if (value.replace(/\s/g, '').length === 0 || isValid(name, value)) {
-          updateErrorMessage(name, '');
+      } else if (name === 'password') {
+        const trimmedValue = value.replace(/\s/g, '');
+        if (value.includes(' ')) {
+          updateErrorMessage('password', '*Spaces are not allowed');
+          return;
         }
-      };      
+        if (trimmedValue.length > 0 && trimmedValue.length < 8) {
+          updateErrorMessage('password', '*Must include at least 8 characters');
+        }
+      }
+    
+      // Additional logic for specific fields can be added here
+    
+      let inputValue = value;
+      if (name === 'name') {
+        inputValue = value.toLowerCase().replace(/\b\w/g, (match) => match.toUpperCase());
+      }
+      
+      if (value.replace(/\s/g, '').length === 0 || isValid(name, value)) {
+        updateErrorMessage(name, '');
+      }
+    
+      setData((prevData) => ({
+        ...prevData,
+        [name]: inputValue,
+      }));
+    };      
       
     const changeOTP = (e) => {
         const {name, value} = e.target;
@@ -146,13 +146,13 @@ export default function SignupForm({ data, setData, errorMessage, setErrorMessag
     const submitSignupForm = async (e) => {
       e.preventDefault();
      
-      setData({
-        email: '',
-        name: '',
-        password: '',
-        username: '',
-      });
         setDetailsSubmitted(false);
+
+        if (!data.name || !data.email || !data.password || !data.username)
+        {
+          setMessage('Please enter all details');
+          return;
+        }
 
       try {
 
@@ -161,36 +161,37 @@ export default function SignupForm({ data, setData, errorMessage, setErrorMessag
           name: data.name,
           password: data.password,
           username: data.username,
+          mode: 0,
         });
-        console.log(response.data);
-    
-        const { token } = response.data;
-    
-        // Set the JWT token in the request headers
-        setAuthToken(token);
-    
-        // Store the JWT token in local storage or cookies
-        sessionStorage.setItem('token', token);
-    
+
+        setData({
+          username: '',
+        email: '',
+        password: '',
+        name: '',
+        otp: null,
+        mode: 0,
+        })
+        
         // Redirect the user to the protected route or dashboard
         navigate('/login');
       } catch (err) {
         // Handle login error
-        setMessage('An error occured, please try again later');
+        setMessage('An error occured, please enter correct details or try again later');
       }
     }
 
     return(
-        <div className='container'>
+        <div className='signupform-container'>
           <Card>
              <Header />
-             <Form />
+             <Form data={data} message={message} changeValue={changeValue} errorMessage={errorMessage} submitSignupForm={submitSignupForm} />
              <div className="or-sign-up-with">
               <div className="line"></div>
               <div className="or-text">or sign up with</div>
               <div className="line"></div>
             </div>
-             <Social />
+             <Social setData={setData} setMessage={setMessage} />
              <div className="account-container">
               <div className="account">Already have an account? <Link style={{color: 'red', textDecoration: 'none', fontWeight: '700'}} to='/login'>Log in</Link></div>
             </div>

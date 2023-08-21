@@ -7,7 +7,6 @@ import axios from 'axios';
 import Card from './Card';
 import Header from './Header';
 import Form from './Form';
-import Laptop from './Laptop';
 import Social from './Social';
 import {baseUrl} from '../../utils/index';
 
@@ -68,28 +67,9 @@ export default function LoginForm({ data, setData, errorMessage, setErrorMessage
 
     }
 
-    const changeValue = (e) => {
-        const { name, value } = e.target;
+    const changeValue = (name, value) => {
       
-        if ((name === 'name' && value.replace(/\s/g, '').length > 50) || (name === 'username' && value.replace(/\s/g, '').length > 30)) {
-          let len = 30;
-          if (name === 'name') len = 50;
-          updateErrorMessage(name, `*Max limit ${len} characters`);
-          return;
-        }
-      
-        if (name === 'name') {
-          if (value.replace(/\s/g, '').length > 50) {
-            updateErrorMessage('name', '*Max limit 50 characters');
-            return;
-          } else if (value.replace(/\s/g, '').length > 1 && !isValid('name', value)) {
-            updateErrorMessage('name', '*Only A-Z and a-z characters allowed');
-            return;
-          } else if (value.split(" ").length > 2) {
-            updateErrorMessage('name', '*Only First and Last name allowed');
-            return;
-          }
-        } else if (name === 'username') {
+        if (name === 'username') {
           if (value.replace(/\s/g, '').length > 0 && value.includes(' ')) {
             updateErrorMessage('username', '*Spaces are not allowed');
             return;
@@ -99,28 +79,7 @@ export default function LoginForm({ data, setData, errorMessage, setErrorMessage
             updateErrorMessage('username', '*Max length is 30');
             return;
           }
-        } else if (name === 'email') {
-          if (value.replace(/\s/g, '').length > 0) {
-            if (!isValid('email', value)) {
-              updateErrorMessage('email', '*Enter a valid email');
-            } else {
-              updateErrorMessage('email', ''); 
-            }
-          } 
-          else if (value.replace(/\s/g, '').length > 100)
-          {
-            updateErrorMessage('email', '*Max length is 100');
-            return;
-          }
-          else {
-            updateErrorMessage('email', ''); 
-          }
-        } else if (name === 'password') {
-          const trimmedValue = value.replace(/\s/g, '');
-          if (trimmedValue.length > 0 && trimmedValue.length < 8) {
-            updateErrorMessage('password', '*Must include at least 8 characters');
-          }
-        }
+        } 
       
         let inputValue = value;
         if (name === 'name')
@@ -146,23 +105,30 @@ export default function LoginForm({ data, setData, errorMessage, setErrorMessage
     const submitLoginForm = async (e) => {
       e.preventDefault();
      
-      setData({
-        email: '',
-        name: '',
-        password: '',
-        username: '',
-      });
         setDetailsSubmitted(false);
+
+        if (!data.username || !data.password)
+        {
+          setMessage('Please enter all details');
+          return;
+        }
 
       try {
 
-        const response = await axios.post(`${baseUrl}/api/auth/sign-up`, {
+        const response = await axios.post(`${baseUrl}/api/auth/login`, {
           email: data.email,
           name: data.name,
           password: data.password,
           username: data.username,
+          mode: 0,
         });
-        console.log(response.data);
+        setData({
+          email: '',
+          name: '',
+          password: '',
+          username: '',
+          mode: 0,
+        });
     
         const { token } = response.data;
     
@@ -170,27 +136,27 @@ export default function LoginForm({ data, setData, errorMessage, setErrorMessage
         setAuthToken(token);
     
         // Store the JWT token in local storage or cookies
-        sessionStorage.setItem('token', token);
+        localStorage.setItem('token', token);
     
         // Redirect the user to the protected route or dashboard
-        navigate('/login');
+        navigate('/');
       } catch (err) {
         // Handle login error
-        setMessage('An error occured, please try again later');
+        setMessage('An error occured, please enter correct details or try again later');
       }
     }
 
     return(
-        <div className='container'>
+        <div className='loginform-container'>
           <Card>
              <Header />
-             <Form />
+             <Form data={data} message={message} changeValue={changeValue} errorMessage={errorMessage} submitLoginForm={submitLoginForm} />
              <div className="or-sign-up-with">
               <div className="line"></div>
               <div className="or-text">or continue with</div>
               <div className="line"></div>
             </div>
-             <Social />
+             <Social setData={setData} setMessage={setMessage} />
              <div className="account-container">
               <div className="account">Don't have an account? <Link style={{color: 'red', textDecoration: 'none', fontWeight: '700'}} to='/sign-up'>Sign up</Link></div>
             </div>

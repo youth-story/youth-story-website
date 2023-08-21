@@ -5,6 +5,7 @@ import axios from 'axios';
 import './Form.css';
 import { TextField, InputAdornment, IconButton } from '@mui/material';
 import {baseUrl} from '../../utils/index';
+import InputLabel from '@mui/material/InputLabel';
 import PasswordField from './PasswordField';
 import { styled } from '@mui/system';
 import Visibility from '@mui/icons-material/Visibility';
@@ -26,7 +27,7 @@ const RedIconButton = styled(IconButton)`
   }
 `;
 
-const Form = () => {
+const Form = ({message, data, changeValue, errorMessage, submitLoginForm}) => {
 
   const inputStyles = {
     color: '#B81A1A',
@@ -40,8 +41,13 @@ const Form = () => {
 
   return(
     <form className='form'>
-      <RoundedTextField label="Username" variant="outlined" InputProps={{ style: inputStyles }} fullWidth margin="normal" />
+      <p style={{color: 'red'}}>{message}</p>
+      <RoundedTextField value={data.username} id="username" onChange={(e)=>changeValue("username", e.target.value)} label="Username" variant="outlined" InputProps={{ style: inputStyles }} fullWidth margin="normal" />
+      <InputLabel style={{color: 'red'}} htmlFor="username">{errorMessage.username}</InputLabel>
       <RoundedTextField
+      value={data.password}
+      id="password"
+      onChange={(e)=>changeValue("password", e.target.value)}
       label="Password"
       variant="outlined"
       type={showPassword ? 'text' : 'password'}
@@ -62,6 +68,7 @@ const Form = () => {
         style: inputStyles
       }}
     />
+    <InputLabel style={{color: 'red'}} htmlFor="password">{errorMessage.password}</InputLabel>
     <div className='misc'>
       <div className='remember-forgot'>
         <div className='remember-me'>
@@ -77,7 +84,7 @@ const Form = () => {
         </div>
       </div>
    </div>
-      <button type="submit" className="submit-button">
+      <button onClick={submitLoginForm} type="submit" className="submit-button">
         Login
       </button>
     </form>

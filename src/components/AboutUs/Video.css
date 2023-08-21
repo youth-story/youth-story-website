@@ -1,0 +1,27 @@
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    margin: 2rem;
+    flex-direction: column;
+    background-color: #EBEBEB;
+    width: 80%;
+    border-radius: 20px;
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    width: 80%; /* Adjust this as needed */
+    max-width: 800px; /* Limit the maximum width */
+  }
+  
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
