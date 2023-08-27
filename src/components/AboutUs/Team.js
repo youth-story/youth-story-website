@@ -7,6 +7,11 @@ import Harsh from './team_images/Harsh.jpg';
 import Aviral from './team_images/Aviral.jpg';
 import Hari_Sir from './team_images/Hari_Sir.jpeg';
 import Aditi from './team_images/Aditi.jpeg';
+import Aditya from './team_images/Aditya.jpg';
+import Alabhya from './team_images/Alabhya.jpg';
+import Isha from './team_images/Isha.jpg';
+import Kaustubh from './team_images/Kaustubh.jpg';
+import Sakshi from './team_images/Sakshi.jpg';
 
 export default function Team() {
   return (
@@ -21,6 +26,11 @@ export default function Team() {
         <Profile role='Editor in Chief' name='Aditi Shree' pic={Aditi} linkedIn='https://www.linkedin.com/in/aditi-shree-4220b3284/' />
         {/* <Profile role='Graphics Head' name='Ashwath Devarajan' pic={Ashwath} linkedIn='https://www.linkedin.com/in/ashwathdev/?originalSubdomain=in' /> */}
         <Profile role='Board Member' name='Mr. Hari P Chaurasia' pic={Hari_Sir} linkedIn='https://www.linkedin.com/company/youthstory-india/' />
+        <Profile role='Editor' name='Alabhya Raj' pic={Alabhya} linkedIn='https://www.linkedin.com/in/alabhya-raj-0bb3a9284/' />
+        <Profile role='Editor' name='Sakshi Shewale' pic={Sakshi} linkedIn='https://www.linkedin.com/in/sakshi-shewale-882452215/' />
+        <Profile role='Editor' name='Aditya Pratap Rai' pic={Aditya} linkedIn='https://www.linkedin.com/in/adityaprataprai0717/' />
+        <Profile role='Editor' name='Kaustubh Raj' pic={Kaustubh} linkedIn='https://www.linkedin.com/in/kaustubh-raj-090931232/' />
+        <Profile role='Editor' name='Isha Roy' pic={Isha} linkedIn='https://www.linkedin.com/in/isha-roy-824627201/' />
         </div>
     </div>
   );
