@@ -17,7 +17,7 @@ export default function Team() {
   return (
     <div className='team-container'>
       <h1>Meet the team</h1>
-      <p><span style={{color: 'red'}}>D2D</span> is backed and supported by organizations such as <strong>IIT Patna</strong>, <strong>GeeksforGeeks</strong> and more</p>
+      <p><span style={{color: 'red'}}>D2D</span> is backed and supported by organizations such as <strong>Incubation centre, IIT Patna</strong>, <strong>GeeksforGeeks</strong> and more</p>
       <br />
       <div style={{display: 'flex', flexWrap: 'wrap', gap: '2rem'}}>
         <Profile role='Founder and CEO' name='Harsh Rajput' pic={Harsh} linkedIn='https://www.linkedin.com/in/harshrajput-/?originalSubdomain=in' />
