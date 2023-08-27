@@ -3,8 +3,24 @@ import './Header.css';
 import Button from '@mui/material/Button';
 import Particles from 'react-particles';
 import { loadSlim } from 'tsparticles-slim';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  missionButton: {
+    backgroundColor: '#850202',
+    color: 'white',
+    borderRadius: '5px',
+    boxShadow: 'none', // Overriding the box shadow
+    '&:hover': {
+      backgroundColor: '#6a0202', // Change the color on hover if needed
+    },
+  },
+}));
 
 const Header = () => {
+
+  const classes = useStyles();
+
   const [particlesLoaded, setParticlesLoaded] = useState(false);
 
   const particlesInit = useCallback(async engine => {
@@ -12,7 +28,6 @@ const Header = () => {
   }, []);
 
   const particlesLoadedCallback = useCallback(async container => {
-    await console.log(container);
     setParticlesLoaded(true);
   }, []);
 
@@ -99,10 +114,11 @@ const Header = () => {
       </p>
       <br />
       <Button
+        className={classes.missionButton}
         variant='contained'
         size='large'
         onClick={scrollToMission}
-        style={{ backgroundColor: 'black', color: 'white', borderRadius: '5px', mouse: 'pointer' }}
+        style={{ backgroundColor: '#850202', color: 'white', borderRadius: '5px', mouse: 'pointer' }}
       >
         The Mission {'>'}
       </Button>

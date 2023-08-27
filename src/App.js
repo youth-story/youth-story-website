@@ -10,12 +10,10 @@ export default function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    console.log(token);
   
     if (token) {
       const decodedToken = jwt_decode(token);
       const currentTime = Date.now() / 1000; // Get current time in seconds
-      console.log(decodedToken);
 
       if (decodedToken.exp >= currentTime) {
         // If token is valid, prevent navigation to login and sign-up routes
@@ -24,8 +22,10 @@ export default function App() {
         }
       }
     }
-  }, [navigate, location.pathname]);
+  }, []);
   
 
-  return <MyRoutes tokenExpired={tokenExpired} />;
+  return( 
+      <MyRoutes tokenExpired={tokenExpired} />
+    );
 }

@@ -6,3 +6,10 @@
     align-items: center;
     background: linear-gradient(108.4deg, rgb(253, 44, 56) 3.3%, rgb(176, 2, 12) 98.4%);
   }
+
+  @media (max-width: 768px) {
+    .container-login {
+      background: none;
+      border: none;
+    }
+  }

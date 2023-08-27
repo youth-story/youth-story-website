@@ -27,5 +27,8 @@
     .text div {
         font-size: 1rem;
     }
+    .logo {
+        max-width: 40%;
+    }
 
 }

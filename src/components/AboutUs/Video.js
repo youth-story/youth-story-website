@@ -8,7 +8,7 @@ export default function Video() {
       <h3>We are on a mission to empower the youth to become<br />better than yesterday</h3>
       <div className='video-wrapper'>
         <iframe
-          src="https://www.youtube.com/embed/kOgfmmv9Fhc?autoplay=1&mute=0"
+          src="https://www.youtube.com/embed/kOgfmmv9Fhc"
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -17,6 +17,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
+    "bootstrap": "^5.3.1",
     "framer-motion": "^10.13.1",
     "gapi-script": "^1.2.0",
     "jsonwebtoken": "^9.0.0",

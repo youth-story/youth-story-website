@@ -1,6 +1,5 @@
 import React from 'react';
 import './css/About.css';
-import DrawerAppBar from '../components/AppBar/DrawerAppBar';
 import UserProgressBar from '../components/AboutUs/UserProgressBar';
 import Header from '../components/AboutUs/Header';
 import Timeline from '../components/AboutUs/Timeline';
@@ -11,7 +10,6 @@ export default function About() {
 
     return(
         <div className='about-container'>
-            <DrawerAppBar />
             <Header />
             <UserProgressBar />
             <br />

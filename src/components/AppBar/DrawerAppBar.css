@@ -1,0 +1,27 @@
+.special:hover {
+    color: #850202;
+    background-color: white;
+    border: 1px solid #850202;
+}
+
+.special {
+    font-weight: revert-layer;
+    position: relative;
+    text-decoration: none;
+    padding: 7px;
+    margin-right: 50px;
+    border-radius: 10px;
+    color: white;
+    background-color: #850202;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.regular {
+    font-weight: revert-layer;
+    position: relative;
+    text-decoration: none;
+    padding-bottom: 4px;
+    margin-right: 50px;
+    border-radius: 10px;
+    color: #850202;
+}

@@ -14,7 +14,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import D2DLogo from './D2DLogo.png';
-import jwt_decode from 'jwt-decode';
+import LogoutModal from './LogoutModal';
+import './DrawerAppBar.css';
+import { useNavigate, useLocation } from 'react-router';
 
 const drawerWidth = 240;
 
@@ -22,33 +24,26 @@ function DrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [selectedNavItem, setSelectedNavItem] = React.useState(null);
-  const [signedIn, setSignedIn] = React.useState(false);
-  const navItems = ['About', 'Success-stories', 'Contests'];
+  const navItems = props.navItems;
+  const [showModal, setShowModal] = React.useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  React.useEffect(() => {
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    closeModal();
     const token = localStorage.getItem('token');
-
-    if (token) {
-      const decodedToken = jwt_decode(token);
-      const currentTime = Date.now() / 1000;
-
-      if (decodedToken.exp >= currentTime) {
-        setSignedIn(true);
-      } else {
-        setSignedIn(false);
-      }
-    } else {
-      setSignedIn(false);
-    }
-
-    if (signedIn) {
-      navItems.push('Sign-out');
-    } else {
-      navItems.push('Sign-in');
-    }
-  }, [signedIn]);
-
-  console.log(navItems);
+    if (!token)
+      navigate('/login');
+  }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -61,61 +56,125 @@ function DrawerAppBar(props) {
   const drawer = (
     <Box sx={{ textAlign: 'center' }}>
       <List>
-        {navItems.map((item) => (
-          <Link
-            style={{ textDecoration: 'none', color: '#850202' }}
-            to={
-              item === 'Sign-in' || item === 'Sign-out'
-                ? '/auth'
-                : `/${item.toLowerCase()}`
-            }
-            key={item}
-          >
-            <ListItem
-              disablePadding
-              sx={{
-                textAlign: 'center',
-                borderBottom: selectedNavItem === item ? '2px solid red' : 'none',
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  textAlign: 'center',
-                  borderBottom: selectedNavItem === item ? '4px solid red' : 'none',
+        {navItems.map((item, index) => (
+          <React.Fragment key={index}>
+            {item.label !== 'Logout' ? (
+              <Link
+              className={item.label == 'Logout' || item.label == 'Sign Up' ? 'special' : undefined}
+                style={{
+                  textDecoration: 'none',
+                  backgroundColor: 'red',
+                  marginTop: '10px',
+                  borderRadius:
+                    item.label === 'Sign Up' || item.label === 'Logout'
+                      ? '10px'
+                      : undefined,
+                  background:
+                    item.label === 'Sign Up' || item.label === 'Logout'
+                      ? '#850202'
+                      : undefined,
+                  padding:
+                    item.label === 'Sign Up' || item.label === 'Logout'
+                      ? '10px'
+                      : undefined,
+                  color:
+                    item.label === 'Sign Up' || item.label === 'Logout'
+                      ? 'white'
+                      : '#850202',
                 }}
-                onClick={() => handleNavItemClick(item)}
+                to={item.link}
               >
-                <ListItemText
-                  primary={item}
-                  primaryTypographyProps={{ component: 'span' }}
+                <ListItem
+                  disablePadding
+                  sx={{
+                    textAlign: 'center',
+                    borderBottom:
+                      selectedNavItem === item.label ? '2px solid red' : 'none',
+                  }}
                 >
-                  <span
-                    style={{
-                      display: 'inline-block',
-                      width: selectedNavItem === item ? '10px' : '0',
-                      height: '4px',
-                      backgroundColor: 'red',
-                      marginTop: '10px',
-                      borderRadius: item === 'Sign-up' || item === 'Sign-out' ? '10px' : undefined,
-                      background: item === 'Sign-up' || item === 'Sign-out' ? '#850202' : undefined,
-                      padding: item === 'Sign-up' || item === 'Sign-out' ? '10px' : undefined,
-                      color: item === 'Sign-up' || item === 'Sign-out' ? 'white' : undefined,
+                  <ListItemButton
+                    sx={{
+                      textAlign: 'center',
+                      borderBottom:
+                        selectedNavItem === item.label
+                          ? '4px solid red'
+                          : 'none',
                     }}
-                  />
-                  {item}
-                </ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </Link>
+                    onClick={
+                      item.label === 'Logout'
+                        ? openModal
+                        : undefined
+                    }
+                  >
+                    <ListItemText
+                      primary={item.label}
+                      primaryTypographyProps={{ component: 'span' }}
+                    >
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          width: selectedNavItem === item.label ? '10px' : '0',
+                          height: '4px',
+                        }}
+                      />
+                      {item.label}
+                    </ListItemText>
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            ) : (
+              <React.Fragment>
+                <ListItem
+                  disablePadding
+                  sx={{
+                    textAlign: 'center',
+                    borderBottom:
+                      selectedNavItem === item.label ? '2px solid red' : 'none',
+                  }}
+                >
+                  <ListItemButton
+                    sx={{
+                      textAlign: 'center',
+                      borderBottom:
+                        selectedNavItem === item.label
+                          ? '4px solid red'
+                          : 'none',
+                    }}
+                    onClick={openModal}
+                  >
+                    <ListItemText
+                      primary={item.label}
+                      primaryTypographyProps={{ component: 'span' }}
+                    >
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          width: selectedNavItem === item.label ? '10px' : '0',
+                          height: '4px',
+                        }}
+                      />
+                      {item.label}
+                    </ListItemText>
+                  </ListItemButton>
+                </ListItem>
+                <LogoutModal
+                  showModal={showModal}
+                  handleClose={closeModal}
+                  handleLogout={handleLogout}
+                />
+              </React.Fragment>
+            )}
+          </React.Fragment>
         ))}
       </List>
     </Box>
   );
-
+  
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <>
+       <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar component="nav" sx={{ backgroundColor: '#fff', borderRadius: '10px' }}>
         <Toolbar sx={{ paddingLeft: '20px', paddingRight: '20px', justifyContent: 'space-between' }}>
@@ -136,41 +195,34 @@ function DrawerAppBar(props) {
           </Box>
           <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center' }}>
             {navItems.map((item, index) => (
-              <React.Fragment key={item}>
-                <Link
-                  to={
-                    item === 'Sign-in' || item === 'Sign-out'
-                      ? '/auth'
-                      : `/${item.toLowerCase()}`
-                  }
-                  style={{
-                    fontWeight: 'revert-layer',
-                    color: '#850202',
-                    position: 'relative',
-                    textDecoration: 'none',
-                    paddingBottom: selectedNavItem && item === selectedNavItem ? '4px' : undefined,
-                    marginRight: index !== navItems.length - 1 ? '50px' : undefined,
-                    borderRadius: item === 'Sign-up' || item === 'Sign-out' ? '10px' : undefined,
-                    background: item === 'Sign-up' || item === 'Sign-out' ? 'white' : undefined,
-                    padding: item === 'Sign-up' || item === 'Sign-out' ? '10px' : undefined,
-                    color: item === 'Sign-up' || item === 'Sign-out' ? '#850202' : undefined,
-                  }}
-                >
-                  {item}
-                  {selectedNavItem && item === selectedNavItem && (
-                    <span
-                      style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '3px',
-                        backgroundColor: 'red',
-                      }}
-                    />
-                  )}
-                </Link>
-              </React.Fragment>
+              <React.Fragment>
+             <Link
+             to={item.label !== 'Logout' ? item.link : undefined}
+             className={item.label === 'Logout' || item.label === 'Sign Up' ? 'special' : 'regular'}
+             onClick={item.label === 'Logout' ? openModal : undefined}
+           >
+             {item.label}
+             {selectedNavItem && item.label === selectedNavItem && (
+               <span
+                 style={{
+                   position: 'absolute',
+                   bottom: 0,
+                   left: 0,
+                   width: '100%',
+                   height: '3px',
+                   backgroundColor: 'red',
+                 }}
+               />
+             )}
+           </Link>
+           {item.label === 'Logout' && showModal && (
+             <LogoutModal
+               showModal={showModal}
+               handleClose={closeModal}
+               handleLogout={handleLogout}
+             />
+           )}
+         </React.Fragment>
             ))}
           </Box>
         </Toolbar>
@@ -199,6 +251,7 @@ function DrawerAppBar(props) {
         </Typography>
       </Box>
     </Box>
+    </>
   );
 }
 

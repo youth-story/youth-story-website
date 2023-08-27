@@ -103,7 +103,7 @@ export default function LoginForm({ data, setData, errorMessage, setErrorMessage
     }
 
     const submitLoginForm = async (e) => {
-      e.preventDefault();
+      // e.preventDefault();
      
         setDetailsSubmitted(false);
 

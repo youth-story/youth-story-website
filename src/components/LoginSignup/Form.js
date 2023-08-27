@@ -29,6 +29,8 @@ const RedIconButton = styled(IconButton)`
 
 const Form = ({message, data, changeValue, errorMessage, submitSignupForm}) => {
 
+  const [loading, setLoading] = useState(false);
+
   const inputStyles = {
     color: '#B81A1A',
   };
@@ -37,6 +39,16 @@ const Form = ({message, data, changeValue, errorMessage, submitSignupForm}) => {
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleSignUpForm = async (e) => {
+    if (!loading) {
+      setLoading(true);
+
+      await submitSignupForm(e);
+
+      setLoading(false);
+    }
   };
 
   return(
@@ -82,8 +94,8 @@ const Form = ({message, data, changeValue, errorMessage, submitSignupForm}) => {
       }}
     />
     <InputLabel style={{color: 'red'}} htmlFor="password">{errorMessage.password}</InputLabel>
-      <button onClick={submitSignupForm} type="submit" className="submit-button">
-        Sign Up!
+      <button onClick={(e)=>{handleSignUpForm(e)}} type="submit" className="submit-button" disabled={loading}>
+      {loading ? 'Signing Up...' : 'Sign Up!'}
       </button>
     </form>
   );

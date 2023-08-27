@@ -1,0 +1,9 @@
+.user-count-container {
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    text-align: center; 
+    /* width: 100%; */
+}

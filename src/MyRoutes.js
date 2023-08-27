@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import About from './pages/About';
 import Sponsors from './pages/Sponsors';
@@ -17,11 +17,47 @@ import Contest from './pages/Contest';
 import NotFound from './pages/NotFound';
 // import LogoutButton from './components/Signup/LogoutButton';
 import Article from './components/SuccessStories/Article';
+import DrawerAppBar from './components/AppBar/DrawerAppBar';
+import jwt_decode from 'jwt-decode';
 
 const MyRoutes = () => {
   const location = useLocation();
+  const [signedIn, setSignedIn] = React.useState(false);
+  const [navItems, setNavItems] = useState( [
+    {label: 'About', link: '/about'}, 
+    {label: 'Success Stories', link: '/success-stories'}, 
+    {label: 'Contests', link: '/contests'}
+  ]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      const currentTime = Date.now() / 1000;
+  
+      if (decodedToken.exp >= currentTime) {
+        const updatedNavItems = [{ label: 'Logout', link: '/logout'}];
+  
+      setNavItems(prevNavItems => [...prevNavItems, ...updatedNavItems]);
+      } else {
+        const updatedNavItems = [{ label: 'Sign Up', link: '/sign-up'}];
+  
+      setNavItems(prevNavItems => [...prevNavItems, ...updatedNavItems]);
+      }
+    } else {
+      const updatedNavItems = [{ label: 'Sign Up', link: '/sign-up'}];
+  
+      setNavItems(prevNavItems => [...prevNavItems, ...updatedNavItems]);
+    }
+  
+  }, []);  
+
+  const shouldRenderDrawer = !['/sign-up', '/login'].includes(location.pathname);
 
   return (
+    <>
+      {shouldRenderDrawer && <DrawerAppBar navItems={navItems} />}
     <Routes>
       <Route path="/" element={<About />} />
       {/* <Route path="/social" element={<Social />} />
@@ -41,6 +77,7 @@ const MyRoutes = () => {
       {/* <Route path="/logout" element={<LogoutButton />} /> */}
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </>
   );
 };
 

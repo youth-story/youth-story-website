@@ -29,6 +29,8 @@ const RedIconButton = styled(IconButton)`
 
 const Form = ({message, data, changeValue, errorMessage, submitLoginForm}) => {
 
+  const [loading, setLoading] = useState(false);
+
   const inputStyles = {
     color: '#B81A1A',
   };
@@ -37,6 +39,16 @@ const Form = ({message, data, changeValue, errorMessage, submitLoginForm}) => {
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleLoginFormSubmit = async () => {
+    if (!loading) {
+      setLoading(true);
+
+      await submitLoginForm();
+
+      setLoading(false);
+    }
   };
 
   return(
@@ -84,8 +96,8 @@ const Form = ({message, data, changeValue, errorMessage, submitLoginForm}) => {
         </div>
       </div>
    </div>
-      <button onClick={submitLoginForm} type="submit" className="submit-button">
-        Login
+      <button onClick={handleLoginFormSubmit} type="submit" className="submit-button" disabled={loading}>
+      {loading ? 'Logging In...' : 'Login'}
       </button>
     </form>
   );

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import ContestList from '../components/Contests/ContestList';
 import { ongoing, upComing, completed } from '../dummy/contests';
 import './css/Contests.css';
-import DrawerAppBar from '../components/AppBar/DrawerAppBar';
 
 const Contests = () => {
 
@@ -14,7 +13,6 @@ const Contests = () => {
 
   return (
     <div className='contests-container'>
-        <DrawerAppBar />
         <ContestList title='On Going' contests={contests.ongoing} />
         <ContestList title='Up Coming' contests={contests.upComing} />
         <ContestList title='Completed' contests={contests.completed} />

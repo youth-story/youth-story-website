@@ -1,0 +1,31 @@
+.profile-card {
+  perspective: 1000px;
+  transform: rotateY(-15deg); /* Apply initial right-tilt */
+
+  &:hover .card-cover {
+    transform: rotateY(15deg) scaleY(0.9) translate3d(20px, 30px, 40px); /* Adjust rotations and translations */
+  }
+
+  &:hover .card-content {
+    transform: rotateY(15deg) translate3d(45px, 50px, 40px); /* Adjust rotations and translations */
+  }
+}
+
+.card-cover {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid #777;
+  backdrop-filter: blur(1px);
+  height: 200px;
+  transition: transform 0.4s;
+}
+
+.card-content {
+  align-items: self-end;
+  justify-content: flex-end;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  border: 1px solid #000;
+  backdrop-filter: blur(1px);
+  transition: transform 0.4s;
+}
